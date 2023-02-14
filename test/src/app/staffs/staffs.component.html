@@ -1,0 +1,94 @@
+Today's Date is:- {{ date | date}}
+<br>
+<mat-form-field appearance="fill">
+    <mat-label>departmnt</mat-label>
+    <mat-select (selectionChange)="someMethod($event.value)">
+      <mat-option *ngFor="let staff of dList" [value]="staff" >{{staff}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <h2>{{department}}</h2>
+    <button (click)="onclick()"  >
+      add
+    </button>
+
+    <ng-container *ngIf="visible">      
+<input type="text"[(ngModel)]="user.name" placeholder="enter name" >
+<input type="text" [(ngModel)]="user.mail" placeholder="enter mail">
+<input type="text"[(ngModel)]="user.phoneno" placeholder="enter phoneno">
+<button (click)="addStaff()">submit</button>
+</ng-container>
+
+<br>
+<input placeholder="search" [(ngModel)]="searchtext" (input)="searchintable($event)">
+<table >
+    <thead><tr><th>Sr.no.</th> <th>staff name</th> <th>email</th> <th>phone no.</th> <th>Gender</th><th>action</th></tr></thead>
+    <tbody>
+        <tr *ngFor="let user of tempstaff;let id=index"
+        >
+            <td>{{id+1}}
+            </td>
+
+            <td><span *ngIf="show!=id">{{user.name}}</span><br>
+              <input type="text" *ngIf="show==id"[(ngModel)]="user.name" placeholder="enter name">
+            </td>
+            <td><span *ngIf="show!=id">{{user.mail}} </span>
+              <br>
+              <input type="text" *ngIf="show==id"[(ngModel)]="user.mail" placeholder="enter mail">
+            </td>
+             <td><span *ngIf="show!=id">{{user.phoneno}} </span>
+              <br>
+              <input type="text" *ngIf="show==id"[(ngModel)]="user.phoneno" placeholder="enter phoneno">
+             </td>
+             <td>{{user.gender}}</td>
+
+<td><button *ngIf="show!=id" (click)="inpbox(id)"> Edit </button>
+<button *ngIf="show==id" (click)="savedata()"> save </button>
+<button (click)="deleteData(id)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<form #loginform="ngForm" (ngSubmit)=staffLogin(loginform)>
+<br><br>
+<h1 style="color: blue;font-size: xx-large;">Profile</h1>
+<h2>Username</h2>
+<input type="text" required #name="ngModel" pattern="[a-zA-Z0-9]+$" placeholder="Enter username" name="name" ngModel>
+<br><span *ngIf="name.invalid && name.touched " style="color:red"> enter name</span>
+
+<h2>email</h2>
+<input type="text" required #mail="ngModel" email placeholder="Enter email" name="mail" ngModel>
+<br><span *ngIf="mail.invalid && mail.touched" style="color:red"> enter mail</span>
+
+<h2>phone no.</h2>
+<input type="text" required #phoneno="ngModel" placeholder="Enter phoneno" name="phoneno" ngModel>
+<br><span *ngIf="phoneno.invalid && phoneno.touched" style="color:red"> enter phoneno</span>
+
+<h2>Gender</h2>
+<mat-radio-group aria-label="Select an option" name="gender" ngModel required #gender="ngModel">
+
+  <mat-radio-button value="Female" >Female</mat-radio-button>
+  
+  <mat-radio-button value="male">male</mat-radio-button>
+  
+  <mat-radio-button value="other">other</mat-radio-button>
+</mat-radio-group>
+<br>
+<button [disabled]="loginform.invalid" >submit</button>
+</form>
+
+<br><br>
+<h2>Reactive form</h2>
+<form [formGroup]="logForm" (ngSubmit)="login(logForm)">
+  <input type="text" placeholder="enter staff" name="name" formControlName="name">
+  <span *ngIf="logForm.get('name') && logForm.get('name')?.invalid && logForm.get('name')?.touched"> Enter valid data</span>
+  <br>
+  <input type="text" placeholder="enter mail" name="mail" formControlName="mail">
+  <span *ngIf="logForm.get('mail') && logForm.get('mail')?.invalid && logForm.get('mail')?.touched"> Enter valid data</span>
+
+  <br>
+  <div formArrayName="subjects"></div>
+  <button [disabled]="logForm.invalid"> submit</button>
+</form>

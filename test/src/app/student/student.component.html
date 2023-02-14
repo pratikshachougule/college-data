@@ -1,0 +1,37 @@
+<p>student works!</p>
+<h1>student</h1>
+<mat-form-field appearance="fill">
+    <mat-label>select department</mat-label>
+        <mat-select (selectionChange)="selectDep($event.value)">
+    <mat-option *ngFor="let dep of department" [value]="dep">{{dep}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<h2>{{departmentn}}</h2>
+<h2>Student list</h2>
+<table>
+    <thead> <tr><th>Sr.no.</th><th>student name</th> <th>email</th> <th>phone no.</th></tr></thead>
+    <tbody>
+        <tr *ngFor="let user of student[departmentn];let id=index">
+            <td> {{id +1}}</td>
+            <td><span>{{user.name}} </span> </td>
+            <td>{{user.email}}</td>
+            <td>{{user.phoneno}}</td>
+        </tr>
+    </tbody>
+</table>
+ <form #names="ngForm"(ngSubmit)=submitc(names)>
+  <h2>user name</h2>
+  <input type="text" name="name" #name="ngModel" required placeholder="enter name" ngModel>
+  <span *ngIf="name.invalid && name.touched" style="color:red"> Enter valid data</span>
+  <br>
+  <h2>email</h2>
+  <input type="text" name="email" email #email="ngModel" required placeholder="enter email" ngModel>
+  <span *ngIf="email.invalid && email.touched" style="color:red"> Enter valid data</span>
+
+  <br>
+  <h2>phoneno</h2>
+  <input type="text" name="phoneno" minlength="10" #phoneno="ngModel" required placeholder="enter phoneno" ngModel>
+  <span *ngIf="phoneno.invalid && phoneno.touched" style="color:red"> Enter valid data</span>
+    <br>
+  <button [disabled]="names.invalid">submit</button>
+</form>
